@@ -3,55 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Wakaso Empire | Men's Premium Collection</title>
+    <title>Wakaso Empire | Premium Men's Fashion Northern Nigeria</title>
+    <meta name="description" content="Premium Agbada, Kaftan & Fila for the modern northern man. Order via WhatsApp. Fast delivery in Kano, Kaduna, Abuja. Pay via USSD or COD.">
+    <meta name="keywords" content="Agbada, Kaftan, Fila, Northern Nigeria fashion, Wakaso Empire, men's traditional wear">
+    <meta name="author" content="Wakaso Empire">
+    <link rel="canonical" href="https://wakaso-empire.netlify.app/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wakaso-empire.netlify.app/">
+    <meta property="og:title" content="Wakaso Empire | Premium Men's Fashion Northern Nigeria">
+    <meta property="og:description" content="Shop premium Agbada, Kaftan & Fila. Order via WhatsApp. USSD & COD available.">
+    <meta property="og:image" content="https://i.ibb.co/B28HSthP/agbada.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Wakaso Empire">
+    <meta property="og:locale" content="en_NG">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://wakaso-empire.netlify.app/">
+    <meta name="twitter:title" content="Wakaso Empire | Premium Men's Fashion Northern Nigeria">
+    <meta name="twitter:description" content="Shop premium Agbada, Kaftan & Fila. Order via WhatsApp. USSD & COD available.">
+    <meta name="twitter:image" content="https://i.ibb.co/B28HSthP/agbada.jpg">
+    
+    <!-- Preconnect & Performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+    
     <!-- Tailwind CSS + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts: Poppins + Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Analytics 4 & Meta Pixel (will be loaded asynchronously) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        // Replace G-XXXXXXXXXX with your actual GA4 measurement ID
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- Meta Pixel Code (Facebook) - replace YOUR_PIXEL_ID with actual ID -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f0f9f8 0%, #e6f4f1 100%);
-        }
-        h1, h2, h3, .font-heading {
-            font-family: 'Poppins', sans-serif;
-        }
-        .wa-btn {
-            transition: all 0.2s ease;
-        }
-        .wa-btn:active {
-            transform: scale(0.97);
-        }
-        [data-lang="ha"] .en-only {
-            display: none;
-        }
-        [data-lang="en"] .ha-only {
-            display: none;
-        }
-        .product-card {
-            transition: transform 0.25s ease, box-shadow 0.3s ease;
-        }
-        .product-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #115e59;
-            border-radius: 10px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f0f9f8 0%, #e6f4f1 100%); }
+        h1, h2, h3, .font-heading { font-family: 'Poppins', sans-serif; }
+        .wa-btn { transition: all 0.2s ease; }
+        .wa-btn:active { transform: scale(0.97); }
+        [data-lang="ha"] .en-only { display: none; }
+        [data-lang="en"] .ha-only { display: none; }
+        .product-card { transition: transform 0.25s ease, box-shadow 0.3s ease; }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #115e59; border-radius: 10px; }
         .filter-select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
             background-position: right 0.5rem center;
@@ -62,6 +86,10 @@
     </style>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#115e59">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Wakaso Empire">
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/115e59/white?text=WE">
 </head>
 <body class="text-gray-800" data-lang="en">
 
@@ -158,7 +186,7 @@
     </footer>
 
     <script>
-        // Men's items: Agbada, Kaftan, Fila (no Atamfa)
+        // Product data
         const products = [
             { id: 1, name_en: "Premium Agbada", name_ha: "Agbada mai daraja", price: 45000, category: "agbada", image: "https://i.ibb.co/B28HSthP/agbada.jpg", sizes: ["S","M","L","XL"], colors: ["White","Black","Blue"] },
             { id: 2, name_en: "Modern Kaftan", name_ha: "Kaftan na zamani", price: 28500, category: "kaftan", image: "https://i.ibb.co/7xnxhnst/kaftan.jpg", sizes: ["M","L","XL"], colors: ["Grey","Brown"] },
@@ -173,6 +201,41 @@
         let filterCategory = "all";
         let searchTerm = "";
 
+        // Marketing tracking helper
+        function trackWhatsAppClick(product, selectedSize, selectedColor) {
+            // Google Analytics 4 event
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'WhatsApp',
+                    'event_label': product.name_en,
+                    'value': product.price,
+                    'currency': 'NGN',
+                    'send_to': 'G-XXXXXXXXXX'
+                });
+                gtag('event', 'whatsapp_click', {
+                    'product_id': product.id,
+                    'product_name': product.name_en,
+                    'price': product.price,
+                    'size': selectedSize,
+                    'color': selectedColor
+                });
+            }
+            // Facebook Pixel event
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead', {
+                    content_name: product.name_en,
+                    content_category: product.category,
+                    value: product.price,
+                    currency: 'NGN'
+                });
+                fbq('trackCustom', 'WhatsAppOrderClick', {
+                    product_id: product.id,
+                    product_name: product.name_en
+                });
+            }
+        }
+
+        // DOM elements
         const productGrid = document.getElementById("productGrid");
         const langToggle = document.getElementById("langToggle");
         const searchInput = document.getElementById("searchInput");
@@ -185,9 +248,7 @@
         const closeModal = document.getElementById("closeModal");
         const closeModalBtn = document.getElementById("closeModalBtn");
 
-        function t(enText, haText) {
-            return currentLang === "en" ? enText : haText;
-        }
+        function t(enText, haText) { return currentLang === "en" ? enText : haText; }
 
         function renderProducts() {
             const filtered = products.filter(p => {
@@ -196,12 +257,10 @@
                 const nameMatch = currentLang === "en" ? p.name_en.toLowerCase().includes(searchLower) : p.name_ha.toLowerCase().includes(searchLower);
                 return matchesCategory && nameMatch;
             });
-
             if (filtered.length === 0) {
                 productGrid.innerHTML = `<div class="col-span-full text-center py-16 text-gray-400"><i class="fas fa-search text-4xl mb-3 opacity-50"></i><p>${t("No products found", "Babu kayayyakin da suka dace")}</p></div>`;
                 return;
             }
-
             productGrid.innerHTML = filtered.map(p => {
                 const displayName = currentLang === "en" ? p.name_en : p.name_ha;
                 return `
@@ -241,6 +300,9 @@
             const message = `*Wakaso Empire Order*%0A%0A🛍️ Product: ${productName}%0A💰 Price: ₦${product.price.toLocaleString()}%0A📏 Size: ${selectedSize}%0A🎨 Color: ${selectedColor}%0A📍 Location: (share via map)%0A💵 Payment: COD / USSD%0A%0AThank you!`;
             cart.push({ id: productId, size: selectedSize, color: selectedColor });
             updateCartUI();
+            // Track marketing events
+            trackWhatsAppClick(product, selectedSize, selectedColor);
+            // Open WhatsApp
             window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${message}`, '_blank');
         };
 
@@ -253,31 +315,16 @@
             }
         }
 
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.body.setAttribute("data-lang", lang);
-            renderProducts();
-        }
-
+        function setLanguage(lang) { currentLang = lang; document.body.setAttribute("data-lang", lang); renderProducts(); }
         function startVoiceSearch() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                alert(t("Voice search not supported on this browser", "Binciken murya baya aiki a wannan browser"));
-                return;
-            }
+            if (!SpeechRecognition) { alert(t("Voice search not supported", "Binciken murya baya aiki")); return; }
             const recognition = new SpeechRecognition();
             recognition.lang = currentLang === "en" ? "en-NG" : "ha-NG";
             recognition.interimResults = false;
             recognition.start();
-            recognition.onresult = (event) => {
-                const spoken = event.results[0][0].transcript;
-                searchInput.value = spoken;
-                searchTerm = spoken;
-                renderProducts();
-            };
-            recognition.onerror = () => {
-                alert(t("Could not hear you, please type", "Ba a ji murya, da fatan a rubuta"));
-            };
+            recognition.onresult = (event) => { searchInput.value = event.results[0][0].transcript; searchTerm = searchInput.value; renderProducts(); };
+            recognition.onerror = () => { alert(t("Could not hear you", "Ba a ji murya")); };
         }
 
         langToggle.addEventListener("click", () => setLanguage(currentLang === "en" ? "ha" : "en"));
@@ -287,12 +334,7 @@
         cartFloater.addEventListener("click", () => {
             if (cart.length === 0) return;
             let combinedMsg = `*Wakaso Empire Order Summary*%0A%0A`;
-            cart.forEach((item, idx) => {
-                const prod = products.find(p => p.id === item.id);
-                if (prod) {
-                    combinedMsg += `${idx+1}. ${prod.name_en} - ${item.size} / ${item.color} - ₦${prod.price}%0A`;
-                }
-            });
+            cart.forEach((item, idx) => { const prod = products.find(p => p.id === item.id); if(prod) combinedMsg += `${idx+1}. ${prod.name_en} - ${item.size}/${item.color} - ₦${prod.price}%0A`; });
             combinedMsg += `%0ATotal items: ${cart.length}%0APreferred payment: COD / USSD%0ALocation: (to be shared)`;
             window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${combinedMsg}`, '_blank');
         });
@@ -303,6 +345,61 @@
         ussdModal.addEventListener("click", (e) => { if (e.target === ussdModal) closeModalHandler(); });
 
         renderProducts();
+
+        // JSON-LD structured data for products and website (helps Google Shopping / rich results)
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "WebSite",
+                    "name": "Wakaso Empire",
+                    "url": "https://wakaso-empire.netlify.app/",
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": "https://wakaso-empire.netlify.app/?search={search_term_string}",
+                        "query-input": "required name=search_term_string"
+                    }
+                },
+                {
+                    "@type": "Organization",
+                    "name": "Wakaso Empire",
+                    "url": "https://wakaso-empire.netlify.app/",
+                    "logo": "https://placehold.co/192x192/115e59/white?text=WE",
+                    "contactPoint": {
+                        "@type": "ContactPoint",
+                        "telephone": "+2348165510842",
+                        "contactType": "customer service",
+                        "availableLanguage": ["English", "Hausa"]
+                    },
+                    "sameAs": [
+                        "https://wa.me/2348165510842",
+                        "https://www.instagram.com/wakasoempire/",
+                        "https://www.facebook.com/wakasoempire/"
+                    ]
+                }
+            ]
+        };
+        // Add each product as a Product schema
+        products.forEach(p => {
+            structuredData["@graph"].push({
+                "@type": "Product",
+                "name": p.name_en,
+                "description": `Premium ${p.name_en} - Traditional northern Nigerian fashion for men. Available in ${p.colors.join(', ')}.`,
+                "image": p.image,
+                "sku": `WAK-${p.id}`,
+                "offers": {
+                    "@type": "Offer",
+                    "price": p.price,
+                    "priceCurrency": "NGN",
+                    "availability": "https://schema.org/InStock",
+                    "url": `https://wakaso-empire.netlify.app/?product=${p.id}`
+                }
+            });
+        });
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(structuredData);
+        document.head.appendChild(script);
     </script>
 </body>
 </html>
