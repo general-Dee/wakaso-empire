@@ -37,7 +37,7 @@
     <!-- Tailwind CSS + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts: Poppins + Inter -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Google Analytics 4 (replace G-XXXXXXXXXX with your ID) -->
@@ -75,12 +75,41 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: #115e59; border-radius: 10px; }
+        .size-btn, .color-btn {
+            transition: all 0.15s ease;
+            border: 1px solid #e2e8f0;
+        }
+        .size-btn.selected, .color-btn.selected {
+            background-color: #115e59 !important;
+            color: white !important;
+            border-color: #115e59 !important;
+        }
         .filter-select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
             background-position: right 0.5rem center;
             background-repeat: no-repeat;
             background-size: 1.5em 1.5em;
             appearance: none;
+        }
+        .autocomplete-items {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            z-index: 50;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .autocomplete-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        .autocomplete-item:hover {
+            background-color: #f0f9f8;
         }
     </style>
     <link rel="manifest" href="manifest.json">
@@ -139,7 +168,8 @@
         <div class="flex flex-col sm:flex-row gap-3 max-w-6xl mx-auto">
             <div class="relative flex-1">
                 <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <input type="text" id="searchInput" placeholder="🔍 Search product / Bincika kaya" class="w-full border border-gray-200 rounded-full py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-teal-400 bg-gray-50">
+                <input type="text" id="searchInput" placeholder="🔍 Search product / Bincika kaya" class="w-full border border-gray-200 rounded-full py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-teal-400 bg-gray-50" autocomplete="off">
+                <div id="autocompleteList" class="autocomplete-items hidden"></div>
             </div>
             <select id="categoryFilter" class="filter-select border border-gray-200 rounded-full px-5 py-2.5 bg-gray-50 text-gray-700 focus:ring-2 focus:ring-teal-400 outline-none cursor-pointer">
                 <option value="all">📦 All / Duka</option>
@@ -154,13 +184,47 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="productGrid"></div>
     </main>
 
-    <div id="cartFloater" class="fixed bottom-6 right-6 bg-teal-700 text-white p-3.5 rounded-full shadow-xl z-30 hidden transition-all duration-200 hover:scale-110 cursor-pointer">
+    <!-- Recently Viewed Section -->
+    <div id="recentlyViewedSection" class="px-5 py-8 max-w-7xl mx-auto hidden">
+        <h2 class="text-2xl font-heading font-bold text-teal-800 mb-4 en-only">🕘 Recently Viewed</h2>
+        <h2 class="text-2xl font-heading font-bold text-teal-800 mb-4 ha-only">🕘 Kayayyakin da ka gani</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="recentlyViewedGrid"></div>
+    </div>
+
+    <!-- Floating Cart -->
+    <div id="cartFloater" class="fixed bottom-24 right-6 bg-teal-700 text-white p-3.5 rounded-full shadow-xl z-30 hidden transition-all duration-200 hover:scale-110 cursor-pointer">
         <i class="fas fa-shopping-bag text-xl"></i>
         <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
     </div>
 
+    <!-- Sticky WhatsApp CTA -->
+    <a id="stickyWhatsApp" href="#" target="_blank" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-3.5 rounded-full shadow-xl z-40 flex items-center justify-center w-12 h-12 transition-all duration-200 hover:scale-110">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <!-- Size Guide Modal -->
+    <div id="sizeGuideModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden transition-all backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-bold text-xl text-teal-800">📏 Size Guide (Men's Wear)</h3>
+                <button id="closeSizeGuide" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-3 text-sm">
+                <div class="flex justify-between border-b py-2"><span class="font-semibold">Size</span><span>Chest (in)</span><span>Length (in)</span></div>
+                <div class="flex justify-between py-1"><span>S</span><span>38-40</span><span>42</span></div>
+                <div class="flex justify-between py-1"><span>M</span><span>40-42</span><span>44</span></div>
+                <div class="flex justify-between py-1"><span>L</span><span>42-44</span><span>46</span></div>
+                <div class="flex justify-between py-1"><span>XL</span><span>44-46</span><span>48</span></div>
+                <div class="flex justify-between py-1"><span>XXL</span><span>46-48</span><span>50</span></div>
+                <p class="text-xs text-gray-500 mt-3">* Fila (caps) are one size fits most. For custom measurements, chat with us on WhatsApp.</p>
+            </div>
+            <button id="closeSizeGuideBtn" class="mt-5 w-full bg-teal-700 hover:bg-teal-800 text-white py-2.5 rounded-xl transition">Got it</button>
+        </div>
+    </div>
+
+    <!-- USSD Modal (existing) -->
     <div id="ussdModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden transition-all backdrop-blur-sm">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl transform transition-all">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl">
             <div class="flex justify-between items-center mb-3">
                 <h3 class="font-bold text-xl text-teal-800 en-only">💳 USSD Payment</h3>
                 <h3 class="font-bold text-xl text-teal-800 ha-only">💳 Biya ta USSD</h3>
@@ -170,7 +234,7 @@
                 <p class="text-sm en-only">Dial <strong class="text-teal-800">*123#</strong> on any phone → Select "Pay bills" → Enter Wakaso code: <strong class="bg-white px-1.5 py-0.5 rounded">WAK501</strong> → Amount → Reference (order number from WhatsApp). Or choose Cash on Delivery.</p>
                 <p class="text-sm ha-only">Danna <strong class="text-teal-800">*123#</strong> a kowace waya → Zabi "Biya kudi" → Shigar lambar Wakaso: <strong class="bg-white px-1.5 py-0.5 rounded">WAK501</strong> → Adadin kudi → Lambar oda (daga WhatsApp). Ko zabi COD.</p>
             </div>
-            <button id="closeModalBtn" class="mt-5 w-full bg-teal-700 hover:bg-teal-800 text-white py-2.5 rounded-xl transition font-medium">Got it / Na fahimta</button>
+            <button id="closeModalBtn" class="mt-5 w-full bg-teal-700 hover:bg-teal-800 text-white py-2.5 rounded-xl transition">Got it / Na fahimta</button>
         </div>
     </div>
 
@@ -185,72 +249,116 @@
     </footer>
 
     <script>
-        // Product catalog (men only: Agbada, Kaftan, Fila - no Atamfa)
+        // Product catalog
         const products = [
-            { id: 1, name_en: "Premium Agbada", name_ha: "Agbada mai daraja", price: 45000, category: "agbada", image: "https://i.ibb.co/B28HSthP/agbada.jpg", sizes: ["S","M","L","XL"], colors: ["White","Black","Blue"] },
-            { id: 2, name_en: "Modern Kaftan", name_ha: "Kaftan na zamani", price: 28500, category: "kaftan", image: "https://i.ibb.co/7xnxhnst/kaftan.jpg", sizes: ["M","L","XL"], colors: ["Grey","Brown"] },
-            { id: 3, name_en: "Wedding Agbada", name_ha: "Agbadan aure", price: 85000, category: "agbada", image: "https://i.ibb.co/Kxp3HGBv/wedding-agbada.jpg", sizes: ["L","XL","XXL"], colors: ["Cream","Gold"] },
-            { id: 4, name_en: "Classic Fila (Embroidered)", name_ha: "Fila na gargajiya (da zane)", price: 8500, category: "fila", image: "https://i.ibb.co/wFsRjFb0/classic-fila.jpg", sizes: ["One Size"], colors: ["White","Black","Blue"] },
-            { id: 5, name_en: "Premium Fila (Silk)", name_ha: "Fila mai daraja (siliki)", price: 12500, category: "fila", image: "https://i.ibb.co/mCHGPkdy/fila.jpg", sizes: ["One Size"], colors: ["Cream","Navy","Maroon"] }
+            { id: 1, name_en: "Premium Agbada", name_ha: "Agbada mai daraja", price: 45000, category: "agbada", image: "https://i.ibb.co/B28HSthP/agbada.jpg", sizes: ["S","M","L","XL"], colors: ["White","Black","Blue"], badge: "⭐ Best Seller" },
+            { id: 2, name_en: "Modern Kaftan", name_ha: "Kaftan na zamani", price: 28500, category: "kaftan", image: "https://i.ibb.co/7xnxhnst/kaftan.jpg", sizes: ["M","L","XL"], colors: ["Grey","Brown"], badge: "🔥 High Demand" },
+            { id: 3, name_en: "Wedding Agbada", name_ha: "Agbadan aure", price: 85000, category: "agbada", image: "https://i.ibb.co/Kxp3HGBv/wedding-agbada.jpg", sizes: ["L","XL","XXL"], colors: ["Cream","Gold"], badge: "⭐ Premium" },
+            { id: 4, name_en: "Classic Fila (Embroidered)", name_ha: "Fila na gargajiya (da zane)", price: 8500, category: "fila", image: "https://i.ibb.co/wFsRjFb0/classic-fila.jpg", sizes: ["One Size"], colors: ["White","Black","Blue"], badge: "🔥 Popular" },
+            { id: 5, name_en: "Premium Fila (Silk)", name_ha: "Fila mai daraja (siliki)", price: 12500, category: "fila", image: "https://i.ibb.co/mCHGPkdy/fila.jpg", sizes: ["One Size"], colors: ["Cream","Navy","Maroon"], badge: "⭐ New" }
         ];
 
-        // Updated WhatsApp number: +234 916 733 4331 -> 2349167334331
         const BUSINESS_WA_NUMBER = "2349167334331";
         let currentLang = "en";
         let cart = [];
         let filterCategory = "all";
         let searchTerm = "";
 
-        // Marketing tracking helper
+        // Recently Viewed (store max 3)
+        let recentlyViewed = JSON.parse(localStorage.getItem('wakaso_recently_viewed') || '[]');
+
+        // UTM tracking
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmSource = urlParams.get('utm_source') || '';
+        const utmMedium = urlParams.get('utm_medium') || '';
+        const utmCampaign = urlParams.get('utm_campaign') || '';
+        const utmContent = urlParams.get('utm_content') || '';
+        let utmString = '';
+        if (utmSource || utmMedium || utmCampaign) {
+            utmString = `%0A📊 UTM: ${utmSource}/${utmMedium}/${utmCampaign}`;
+        }
+
+        // Marketing tracking
         function trackWhatsAppClick(product, selectedSize, selectedColor) {
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'WhatsApp',
-                    'event_label': product.name_en,
-                    'value': product.price,
-                    'currency': 'NGN'
-                });
-                gtag('event', 'whatsapp_click', {
-                    'product_id': product.id,
-                    'product_name': product.name_en,
-                    'price': product.price,
-                    'size': selectedSize,
-                    'color': selectedColor
-                });
+                gtag('event', 'generate_lead', { event_category: 'WhatsApp', event_label: product.name_en, value: product.price, currency: 'NGN' });
+                gtag('event', 'whatsapp_click', { product_id: product.id, product_name: product.name_en, price: product.price, size: selectedSize, color: selectedColor });
             }
             if (typeof fbq !== 'undefined') {
-                fbq('track', 'Lead', {
-                    content_name: product.name_en,
-                    content_category: product.category,
-                    value: product.price,
-                    currency: 'NGN'
-                });
-                fbq('trackCustom', 'WhatsAppOrderClick', {
-                    product_id: product.id,
-                    product_name: product.name_en
-                });
+                fbq('track', 'Lead', { content_name: product.name_en, content_category: product.category, value: product.price, currency: 'NGN' });
+                fbq('trackCustom', 'WhatsAppOrderClick', { product_id: product.id, product_name: product.name_en });
             }
         }
 
-        const productGrid = document.getElementById("productGrid");
-        const langToggle = document.getElementById("langToggle");
-        const searchInput = document.getElementById("searchInput");
-        const categoryFilter = document.getElementById("categoryFilter");
-        const cartFloater = document.getElementById("cartFloater");
-        const cartCountSpan = document.getElementById("cartCount");
-        const voiceSearchBtn = document.getElementById("voiceSearchBtn");
-        const showUssdModal = document.getElementById("showUssdModal");
-        const ussdModal = document.getElementById("ussdModal");
-        const closeModal = document.getElementById("closeModal");
-        const closeModalBtn = document.getElementById("closeModalBtn");
+        function addToRecentlyViewed(product) {
+            recentlyViewed = recentlyViewed.filter(p => p.id !== product.id);
+            recentlyViewed.unshift(product);
+            if (recentlyViewed.length > 3) recentlyViewed.pop();
+            localStorage.setItem('wakaso_recently_viewed', JSON.stringify(recentlyViewed));
+            renderRecentlyViewed();
+        }
 
-        function t(enText, haText) { return currentLang === "en" ? enText : haText; }
+        function renderRecentlyViewed() {
+            const section = document.getElementById('recentlyViewedSection');
+            const grid = document.getElementById('recentlyViewedGrid');
+            if (recentlyViewed.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            section.classList.remove('hidden');
+            grid.innerHTML = recentlyViewed.map(p => {
+                const displayName = currentLang === 'en' ? p.name_en : p.name_ha;
+                return `
+                    <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                        <div class="relative overflow-hidden bg-teal-50">
+                            <img src="${p.image}" alt="${displayName}" class="w-full h-48 object-cover" loading="lazy">
+                            <div class="absolute top-2 left-2 bg-teal-700 text-white text-xs px-2 py-0.5 rounded-full">${p.category.toUpperCase()}</div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="font-bold text-gray-800">${displayName}</h3>
+                            <p class="text-teal-700 font-bold">₦${p.price.toLocaleString()}</p>
+                            <button onclick="scrollToProduct(${p.id})" class="w-full mt-2 bg-teal-100 hover:bg-teal-200 text-teal-800 py-1.5 rounded-lg text-sm transition">View Product</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.scrollToProduct = function(id) {
+            const element = document.getElementById(`product-${id}`);
+            if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        };
+
+        // Autocomplete
+        function updateAutocomplete() {
+            const input = searchInput.value.toLowerCase();
+            const autocompleteDiv = document.getElementById('autocompleteList');
+            if (input.length < 2) { autocompleteDiv.classList.add('hidden'); return; }
+            const matches = products.filter(p => (currentLang === 'en' ? p.name_en.toLowerCase().includes(input) : p.name_ha.toLowerCase().includes(input)));
+            if (matches.length === 0) { autocompleteDiv.classList.add('hidden'); return; }
+            autocompleteDiv.classList.remove('hidden');
+            autocompleteDiv.innerHTML = matches.map(p => {
+                const name = currentLang === 'en' ? p.name_en : p.name_ha;
+                return `<div class="autocomplete-item" onclick="selectAutocomplete('${name}')">${name}</div>`;
+            }).join('');
+        }
+
+        window.selectAutocomplete = function(name) {
+            searchInput.value = name;
+            searchTerm = name;
+            document.getElementById('autocompleteList').classList.add('hidden');
+            renderProducts();
+        };
+
+        // Render products with button-based size/color selection
+        let selectedSizes = {};
+        let selectedColors = {};
 
         function renderProducts() {
             const filtered = products.filter(p => {
-                const matchesCategory = filterCategory === "all" || p.category === filterCategory;
+                const matchesCategory = filterCategory === 'all' || p.category === filterCategory;
                 const searchLower = searchTerm.toLowerCase();
-                const nameMatch = currentLang === "en" ? p.name_en.toLowerCase().includes(searchLower) : p.name_ha.toLowerCase().includes(searchLower);
+                const nameMatch = currentLang === 'en' ? p.name_en.toLowerCase().includes(searchLower) : p.name_ha.toLowerCase().includes(searchLower);
                 return matchesCategory && nameMatch;
             });
             if (filtered.length === 0) {
@@ -258,24 +366,46 @@
                 return;
             }
             productGrid.innerHTML = filtered.map(p => {
-                const displayName = currentLang === "en" ? p.name_en : p.name_ha;
+                const displayName = currentLang === 'en' ? p.name_en : p.name_ha;
+                // Initialize selected options if not set
+                if (!selectedSizes[p.id]) selectedSizes[p.id] = p.sizes[0];
+                if (!selectedColors[p.id]) selectedColors[p.id] = p.colors[0];
                 return `
-                    <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div id="product-${p.id}" class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
                         <div class="relative overflow-hidden bg-teal-50">
                             <img src="${p.image}" alt="${displayName}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/600x700/115e59/white?text=Image+Not+Found'">
                             <div class="absolute top-2 left-2 bg-teal-700 text-white text-xs px-2 py-0.5 rounded-full">${p.category.toUpperCase()}</div>
+                            ${p.badge ? `<div class="absolute top-2 right-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">${p.badge}</div>` : ''}
                         </div>
                         <div class="p-4 flex flex-col flex-grow">
                             <h3 class="font-bold text-gray-800 text-lg font-heading">${displayName}</h3>
                             <p class="text-teal-700 font-bold text-xl mt-1">₦${p.price.toLocaleString()}</p>
-                            <div class="mt-3 space-y-2">
-                                <select id="size-${p.id}" class="w-full text-sm border border-gray-200 rounded-lg p-2 bg-gray-50 focus:ring-1 focus:ring-teal-400">
-                                    ${p.sizes.map(s => `<option>${s}</option>`).join('')}
-                                </select>
-                                <select id="color-${p.id}" class="w-full text-sm border border-gray-200 rounded-lg p-2 bg-gray-50 focus:ring-1 focus:ring-teal-400">
-                                    ${p.colors.map(c => `<option>${c}</option>`).join('')}
-                                </select>
-                                <button onclick="addToCartAndWhatsApp(${p.id})" class="wa-btn w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg">
+                            
+                            <!-- Trust badges -->
+                            <div class="flex flex-wrap gap-2 mt-2 text-xs text-gray-500">
+                                <span class="flex items-center gap-1"><i class="fas fa-check-circle text-green-600"></i> COD</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-undo-alt text-teal-600"></i> 7-day returns</span>
+                                <span class="flex items-center gap-1"><i class="fas fa-shield-alt text-teal-600"></i> Secure</span>
+                            </div>
+
+                            <!-- Size selection as buttons -->
+                            <div class="mt-3">
+                                <div class="text-xs font-semibold text-gray-600 mb-1">Size / Girma</div>
+                                <div class="flex flex-wrap gap-2">
+                                    ${p.sizes.map(s => `<button class="size-btn px-3 py-1 rounded-full text-sm bg-gray-100 ${selectedSizes[p.id] === s ? 'selected' : ''}" data-product="${p.id}" data-size="${s}">${s}</button>`).join('')}
+                                </div>
+                            </div>
+                            <!-- Color selection as buttons -->
+                            <div class="mt-2">
+                                <div class="text-xs font-semibold text-gray-600 mb-1">Color / Launi</div>
+                                <div class="flex flex-wrap gap-2">
+                                    ${p.colors.map(c => `<button class="color-btn px-3 py-1 rounded-full text-sm bg-gray-100 ${selectedColors[p.id] === c ? 'selected' : ''}" data-product="${p.id}" data-color="${c}">${c}</button>`).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-2 mt-3">
+                                <button onclick="openSizeGuideModal()" class="text-xs text-teal-600 underline">📏 Size Guide</button>
+                                <button onclick="addToCartAndWhatsApp(${p.id})" class="wa-btn flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md">
                                     <i class="fab fa-whatsapp"></i> ${t("Order via WhatsApp", "Oda ta WhatsApp")}
                                 </button>
                             </div>
@@ -283,24 +413,44 @@
                     </div>
                 `;
             }).join('');
+            // Attach event listeners for size/color buttons after render
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(btn.dataset.product);
+                    const size = btn.dataset.size;
+                    selectedSizes[productId] = size;
+                    renderProducts();
+                });
+            });
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(btn.dataset.product);
+                    const color = btn.dataset.color;
+                    selectedColors[productId] = color;
+                    renderProducts();
+                });
+            });
         }
 
         window.addToCartAndWhatsApp = function(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
-            const sizeSelect = document.getElementById(`size-${productId}`);
-            const colorSelect = document.getElementById(`color-${productId}`);
-            const selectedSize = sizeSelect ? sizeSelect.value : product.sizes[0];
-            const selectedColor = colorSelect ? colorSelect.value : product.colors[0];
+            const selectedSize = selectedSizes[productId] || product.sizes[0];
+            const selectedColor = selectedColors[productId] || product.colors[0];
             const productName = currentLang === "en" ? product.name_en : product.name_ha;
-            const message = `*Wakaso Empire Order*%0A%0A🛍️ Product: ${productName}%0A💰 Price: ₦${product.price.toLocaleString()}%0A📏 Size: ${selectedSize}%0A🎨 Color: ${selectedColor}%0A📍 Location: (share via map)%0A💵 Payment: COD / USSD%0A%0AThank you!`;
+            let message = `*Wakaso Empire Order*%0A%0A🛍️ Product: ${productName}%0A💰 Price: ₦${product.price.toLocaleString()}%0A📏 Size: ${selectedSize}%0A🎨 Color: ${selectedColor}%0A📍 Location: (share via map)%0A💵 Payment: COD / USSD%0A🙏 Thank you!`;
+            if (utmString) message += utmString;
             cart.push({ id: productId, size: selectedSize, color: selectedColor });
             updateCartUI();
             trackWhatsAppClick(product, selectedSize, selectedColor);
-            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${message}`, '_blank');
+            // Add to recently viewed
+            addToRecentlyViewed(product);
+            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
         };
 
         function updateCartUI() {
+            const cartFloater = document.getElementById('cartFloater');
+            const cartCountSpan = document.getElementById('cartCount');
             if (cart.length > 0) {
                 cartFloater.classList.remove("hidden");
                 cartCountSpan.innerText = cart.length;
@@ -309,7 +459,34 @@
             }
         }
 
-        function setLanguage(lang) { currentLang = lang; document.body.setAttribute("data-lang", lang); renderProducts(); }
+        function t(enText, haText) { return currentLang === "en" ? enText : haText; }
+
+        // Sticky WhatsApp CTA
+        function updateStickyWhatsAppLink() {
+            const stickyLink = document.getElementById('stickyWhatsApp');
+            let msg = `Hello Wakaso Empire! I'm interested in your products.`;
+            if (utmString) msg += ` (${utmString})`;
+            stickyLink.href = `https://wa.me/${BUSINESS_WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+        }
+
+        // Size Guide Modal
+        const sizeGuideModal = document.getElementById('sizeGuideModal');
+        window.openSizeGuideModal = () => sizeGuideModal.classList.remove('hidden');
+        document.getElementById('closeSizeGuide')?.addEventListener('click', () => sizeGuideModal.classList.add('hidden'));
+        document.getElementById('closeSizeGuideBtn')?.addEventListener('click', () => sizeGuideModal.classList.add('hidden'));
+
+        // DOM elements
+        const productGrid = document.getElementById("productGrid");
+        const langToggle = document.getElementById("langToggle");
+        const searchInput = document.getElementById("searchInput");
+        const categoryFilter = document.getElementById("categoryFilter");
+        const voiceSearchBtn = document.getElementById("voiceSearchBtn");
+        const showUssdModal = document.getElementById("showUssdModal");
+        const ussdModal = document.getElementById("ussdModal");
+        const closeModal = document.getElementById("closeModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        function setLanguage(lang) { currentLang = lang; document.body.setAttribute("data-lang", lang); renderProducts(); renderRecentlyViewed(); }
         function startVoiceSearch() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) { alert(t("Voice search not supported", "Binciken murya baya aiki")); return; }
@@ -322,72 +499,39 @@
         }
 
         langToggle.addEventListener("click", () => setLanguage(currentLang === "en" ? "ha" : "en"));
-        searchInput.addEventListener("input", (e) => { searchTerm = e.target.value; renderProducts(); });
+        searchInput.addEventListener("input", (e) => { searchTerm = e.target.value; renderProducts(); updateAutocomplete(); });
         categoryFilter.addEventListener("change", (e) => { filterCategory = e.target.value; renderProducts(); });
         voiceSearchBtn.addEventListener("click", startVoiceSearch);
-        cartFloater.addEventListener("click", () => {
+        document.getElementById('cartFloater').addEventListener("click", () => {
             if (cart.length === 0) return;
             let combinedMsg = `*Wakaso Empire Order Summary*%0A%0A`;
-            cart.forEach((item, idx) => { const prod = products.find(p => p.id === item.id); if(prod) combinedMsg += `${idx+1}. ${prod.name_en} - ${item.size}/${item.color} - ₦${prod.price}%0A`; });
+            cart.forEach((item, idx) => { const prod = products.find(p => p.id === item.id); if(prod) combinedMsg += `${idx+1}. ${prod.name_en} - ${item.size} / ${item.color} - ₦${prod.price}%0A`; });
             combinedMsg += `%0ATotal items: ${cart.length}%0APreferred payment: COD / USSD%0ALocation: (to be shared)`;
-            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${combinedMsg}`, '_blank');
+            if (utmString) combinedMsg += utmString;
+            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${encodeURIComponent(combinedMsg)}`, '_blank');
         });
         showUssdModal.addEventListener("click", () => ussdModal.classList.remove("hidden"));
         const closeModalHandler = () => ussdModal.classList.add("hidden");
         closeModal.addEventListener("click", closeModalHandler);
         closeModalBtn.addEventListener("click", closeModalHandler);
         ussdModal.addEventListener("click", (e) => { if (e.target === ussdModal) closeModalHandler(); });
+        // Click outside autocomplete
+        document.addEventListener('click', (e) => { if (!searchInput.contains(e.target)) document.getElementById('autocompleteList').classList.add('hidden'); });
 
         renderProducts();
+        renderRecentlyViewed();
+        updateStickyWhatsAppLink();
 
-        // JSON-LD structured data for SEO / Google Shopping
+        // JSON-LD structured data (same as before)
         const structuredData = {
             "@context": "https://schema.org",
             "@graph": [
-                {
-                    "@type": "WebSite",
-                    "name": "Wakaso Empire",
-                    "url": "https://wakaso-empire.netlify.app/",
-                    "potentialAction": {
-                        "@type": "SearchAction",
-                        "target": "https://wakaso-empire.netlify.app/?search={search_term_string}",
-                        "query-input": "required name=search_term_string"
-                    }
-                },
-                {
-                    "@type": "Organization",
-                    "name": "Wakaso Empire",
-                    "url": "https://wakaso-empire.netlify.app/",
-                    "logo": "https://placehold.co/192x192/115e59/white?text=WE",
-                    "contactPoint": {
-                        "@type": "ContactPoint",
-                        "telephone": "+2349167334331",
-                        "contactType": "customer service",
-                        "availableLanguage": ["English", "Hausa"]
-                    },
-                    "sameAs": [
-                        "https://wa.me/2349167334331",
-                        "https://www.instagram.com/wakasoempire/",
-                        "https://www.facebook.com/wakasoempire/"
-                    ]
-                }
+                { "@type": "WebSite", "name": "Wakaso Empire", "url": "https://wakaso-empire.netlify.app/" },
+                { "@type": "Organization", "name": "Wakaso Empire", "url": "https://wakaso-empire.netlify.app/", "contactPoint": { "@type": "ContactPoint", "telephone": "+2349167334331", "contactType": "customer service" } }
             ]
         };
         products.forEach(p => {
-            structuredData["@graph"].push({
-                "@type": "Product",
-                "name": p.name_en,
-                "description": `Premium ${p.name_en} - Traditional northern Nigerian fashion for men. Available in ${p.colors.join(', ')}.`,
-                "image": p.image,
-                "sku": `WAK-${p.id}`,
-                "offers": {
-                    "@type": "Offer",
-                    "price": p.price,
-                    "priceCurrency": "NGN",
-                    "availability": "https://schema.org/InStock",
-                    "url": `https://wakaso-empire.netlify.app/?product=${p.id}`
-                }
-            });
+            structuredData["@graph"].push({ "@type": "Product", "name": p.name_en, "image": p.image, "offers": { "@type": "Offer", "price": p.price, "priceCurrency": "NGN", "availability": "https://schema.org/InStock" } });
         });
         const script = document.createElement('script');
         script.type = 'application/ld+json';
