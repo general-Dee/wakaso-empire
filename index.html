@@ -111,7 +111,6 @@
         .autocomplete-item:hover {
             background-color: #f0f9f8;
         }
-        /* Order form modal */
         .modal-overlay {
             background-color: rgba(0,0,0,0.7);
             backdrop-filter: blur(4px);
@@ -202,52 +201,52 @@
         <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
     </div>
 
-    <!-- Sticky WhatsApp CTA (opens order form modal) -->
+    <!-- Sticky WhatsApp CTA (opens custom order form) -->
     <button id="stickyWhatsAppBtn" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-3.5 rounded-full shadow-xl z-40 flex items-center justify-center w-12 h-12 transition-all duration-200 hover:scale-110 cursor-pointer">
         <i class="fab fa-whatsapp text-2xl"></i>
     </button>
 
-    <!-- Order Form Modal (appears before WhatsApp) -->
-    <div id="orderFormModal" class="fixed inset-0 modal-overlay flex items-center justify-center z-50 hidden transition-all">
+    <!-- Order Details Modal (used for both product-specific and custom orders) -->
+    <div id="orderDetailsModal" class="fixed inset-0 modal-overlay flex items-center justify-center z-50 hidden transition-all">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-teal-800">📝 Complete Your Order</h3>
-                <button id="closeOrderForm" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+                <h3 class="text-xl font-bold text-teal-800" id="modalTitle">Complete Your Order</h3>
+                <button id="closeOrderDetailsModal" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
             </div>
-            <form id="orderForm" class="space-y-4">
+            <form id="orderDetailsForm" class="space-y-4">
+                <input type="hidden" id="productIdHidden" value="">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Product Name *</label>
-                    <input type="text" id="orderProduct" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-400" placeholder="e.g., Premium Agbada, Wedding Agbada...">
-                    <div id="productSuggestions" class="autocomplete-items hidden absolute z-50 bg-white rounded-lg shadow-lg max-h-40 overflow-y-auto"></div>
+                    <input type="text" id="modalProductName" readonly class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Price (₦) *</label>
-                    <input type="number" id="orderPrice" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-400" placeholder="e.g., 45000">
+                    <input type="text" id="modalPrice" readonly class="w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-100">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Size *</label>
-                    <input type="text" id="orderSize" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-400" placeholder="e.g., L, XL, One Size">
+                    <div id="modalSizeButtons" class="flex flex-wrap gap-2"></div>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Color *</label>
-                    <input type="text" id="orderColor" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-400" placeholder="e.g., Cream, Black, Blue">
+                    <div id="modalColorButtons" class="flex flex-wrap gap-2"></div>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Location (City/Area) *</label>
-                    <input type="text" id="orderLocation" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-400" placeholder="e.g., Kano, Kaduna, Abuja">
+                    <input type="text" id="modalLocation" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-400" placeholder="e.g., Kano, Kaduna, Abuja">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Payment Method *</label>
                     <div class="flex gap-4">
-                        <label class="flex items-center gap-2"><input type="radio" name="payment" value="COD" checked> <span>Cash on Delivery</span></label>
-                        <label class="flex items-center gap-2"><input type="radio" name="payment" value="USSD"> <span>USSD (*123#)</span></label>
+                        <label class="flex items-center gap-2"><input type="radio" name="modalPayment" value="COD" checked> <span>Cash on Delivery</span></label>
+                        <label class="flex items-center gap-2"><input type="radio" name="modalPayment" value="USSD"> <span>USSD (*123#)</span></label>
                     </div>
                 </div>
                 <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2">
                     <i class="fab fa-whatsapp"></i> Send Order via WhatsApp
                 </button>
             </form>
-            <p class="text-xs text-gray-500 mt-3 text-center">All fields are required. Your message will open in WhatsApp.</p>
+            <p class="text-xs text-gray-500 mt-3 text-center">All fields required. Message will open in WhatsApp.</p>
         </div>
     </div>
 
@@ -375,72 +374,116 @@
             if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         };
 
-        // Autocomplete for product name in order form
-        function setupProductAutocomplete() {
-            const input = document.getElementById('orderProduct');
-            const suggestionsDiv = document.getElementById('productSuggestions');
-            input.addEventListener('input', function() {
-                const val = this.value.toLowerCase();
-                if (val.length < 2) { suggestionsDiv.classList.add('hidden'); return; }
-                const matches = products.filter(p => p.name_en.toLowerCase().includes(val) || p.name_ha.toLowerCase().includes(val));
-                if (matches.length === 0) { suggestionsDiv.classList.add('hidden'); return; }
-                suggestionsDiv.classList.remove('hidden');
-                suggestionsDiv.innerHTML = matches.map(p => `<div class="autocomplete-item" data-name="${p.name_en}" data-price="${p.price}">${p.name_en} (₦${p.price.toLocaleString()})</div>`).join('');
-                document.querySelectorAll('#productSuggestions .autocomplete-item').forEach(el => {
-                    el.addEventListener('click', () => {
-                        input.value = el.dataset.name;
-                        document.getElementById('orderPrice').value = el.dataset.price;
-                        suggestionsDiv.classList.add('hidden');
-                    });
-                });
-            });
-            document.addEventListener('click', (e) => {
-                if (!input.contains(e.target) && !suggestionsDiv.contains(e.target)) suggestionsDiv.classList.add('hidden');
-            });
-        }
-
-        // Order form modal logic
-        const orderModal = document.getElementById('orderFormModal');
-        const stickyBtn = document.getElementById('stickyWhatsAppBtn');
-        const closeOrderForm = document.getElementById('closeOrderForm');
-        const orderForm = document.getElementById('orderForm');
-
-        stickyBtn.addEventListener('click', () => {
-            orderModal.classList.remove('hidden');
-        });
-
-        closeOrderForm.addEventListener('click', () => {
-            orderModal.classList.add('hidden');
-        });
-
-        orderModal.addEventListener('click', (e) => {
-            if (e.target === orderModal) orderModal.classList.add('hidden');
-        });
-
-        orderForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const product = document.getElementById('orderProduct').value.trim();
-            const price = document.getElementById('orderPrice').value.trim();
-            const size = document.getElementById('orderSize').value.trim();
-            const color = document.getElementById('orderColor').value.trim();
-            const location = document.getElementById('orderLocation').value.trim();
-            const payment = document.querySelector('input[name="payment"]:checked').value;
-            if (!product || !price || !size || !color || !location) {
-                alert('Please fill all fields');
-                return;
-            }
-            const message = `*New Order from Wakaso Empire*%0A%0AProduct: ${product}%0APrice: ₦${parseInt(price).toLocaleString()}%0ASize: ${size}%0AColor: ${color}%0ALocation: ${location}%0APayment: ${payment}%0A%0AOrder via: Web Catalog (Northern Nigeria)`;
-            const finalMsg = message + utmString;
-            trackWhatsAppClick(product, parseInt(price));
-            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${encodeURIComponent(finalMsg)}`, '_blank');
-            orderModal.classList.add('hidden');
-            orderForm.reset();
-        });
-
-        // Existing product rendering with size/color buttons
+        // Global selected size/color for product cards (maintained separately)
         let selectedSizes = {};
         let selectedColors = {};
 
+        // Order modal logic (for product-specific and custom)
+        const orderModal = document.getElementById('orderDetailsModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalProductName = document.getElementById('modalProductName');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalSizeButtonsDiv = document.getElementById('modalSizeButtons');
+        const modalColorButtonsDiv = document.getElementById('modalColorButtons');
+        const modalLocation = document.getElementById('modalLocation');
+        const modalPaymentRadios = document.querySelectorAll('input[name="modalPayment"]');
+        const productIdHidden = document.getElementById('productIdHidden');
+        let currentProduct = null;
+        let tempSelectedSize = '';
+        let tempSelectedColor = '';
+
+        function openOrderModal(product = null) {
+            if (product) {
+                // Product-specific order
+                modalTitle.innerText = 'Complete Your Order';
+                modalProductName.value = currentLang === 'en' ? product.name_en : product.name_ha;
+                modalPrice.value = `₦${product.price.toLocaleString()}`;
+                productIdHidden.value = product.id;
+                // Build size buttons
+                modalSizeButtonsDiv.innerHTML = product.sizes.map(s => `<button type="button" class="size-option-btn px-3 py-1 rounded-full text-sm bg-gray-100" data-size="${s}">${s}</button>`).join('');
+                modalColorButtonsDiv.innerHTML = product.colors.map(c => `<button type="button" class="color-option-btn px-3 py-1 rounded-full text-sm bg-gray-100" data-color="${c}">${c}</button>`).join('');
+                tempSelectedSize = product.sizes[0];
+                tempSelectedColor = product.colors[0];
+                // Highlight default
+                document.querySelectorAll('.size-option-btn').forEach(btn => {
+                    if (btn.dataset.size === tempSelectedSize) btn.classList.add('selected', 'bg-teal-700', 'text-white');
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.size-option-btn').forEach(b => b.classList.remove('selected', 'bg-teal-700', 'text-white'));
+                        btn.classList.add('selected', 'bg-teal-700', 'text-white');
+                        tempSelectedSize = btn.dataset.size;
+                    });
+                });
+                document.querySelectorAll('.color-option-btn').forEach(btn => {
+                    if (btn.dataset.color === tempSelectedColor) btn.classList.add('selected', 'bg-teal-700', 'text-white');
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.color-option-btn').forEach(b => b.classList.remove('selected', 'bg-teal-700', 'text-white'));
+                        btn.classList.add('selected', 'bg-teal-700', 'text-white');
+                        tempSelectedColor = btn.dataset.color;
+                    });
+                });
+            } else {
+                // Custom order (sticky button)
+                modalTitle.innerText = 'Custom Order Details';
+                modalProductName.value = '';
+                modalPrice.value = '';
+                productIdHidden.value = '';
+                modalSizeButtonsDiv.innerHTML = '<div class="text-sm text-gray-500">Enter custom size below</div><input type="text" id="customSize" placeholder="e.g., L, XL, One Size" class="w-full border rounded-lg px-3 py-2 mt-1">';
+                modalColorButtonsDiv.innerHTML = '<div class="text-sm text-gray-500">Enter custom color below</div><input type="text" id="customColor" placeholder="e.g., Cream, Black" class="w-full border rounded-lg px-3 py-2 mt-1">';
+                tempSelectedSize = '';
+                tempSelectedColor = '';
+            }
+            modalLocation.value = '';
+            document.querySelector('input[name="modalPayment"][value="COD"]').checked = true;
+            orderModal.classList.remove('hidden');
+        }
+
+        function closeOrderModal() {
+            orderModal.classList.add('hidden');
+        }
+
+        // Handle form submission
+        document.getElementById('orderDetailsForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            let productName = modalProductName.value.trim();
+            let priceRaw = modalPrice.value.trim().replace('₦', '').replace(',', '');
+            let size, color;
+            if (productIdHidden.value) {
+                // Product-specific
+                size = tempSelectedSize;
+                color = tempSelectedColor;
+            } else {
+                // Custom
+                const customSize = document.getElementById('customSize')?.value.trim();
+                const customColor = document.getElementById('customColor')?.value.trim();
+                if (!customSize || !customColor) {
+                    alert('Please enter size and color');
+                    return;
+                }
+                size = customSize;
+                color = customColor;
+                if (!productName) productName = '[Custom order]';
+                if (!priceRaw) priceRaw = '0';
+            }
+            const location = modalLocation.value.trim();
+            if (!location) {
+                alert('Please enter your location');
+                return;
+            }
+            const payment = document.querySelector('input[name="modalPayment"]:checked').value;
+            const priceFormatted = parseInt(priceRaw).toLocaleString();
+            const message = `*New Order from Wakaso Empire*%0A%0AProduct: ${productName}%0APrice: ₦${priceFormatted}%0ASize: ${size}%0AColor: ${color}%0ALocation: ${location}%0APayment: ${payment}%0A%0AOrder via: Web Catalog (Northern Nigeria)`;
+            const finalMsg = message + utmString;
+            trackWhatsAppClick(productName, parseInt(priceRaw) || 0);
+            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${encodeURIComponent(finalMsg)}`, '_blank');
+            closeOrderModal();
+        });
+
+        // Sticky button event
+        document.getElementById('stickyWhatsAppBtn').addEventListener('click', () => openOrderModal(null));
+        document.getElementById('closeOrderDetailsModal').addEventListener('click', closeOrderModal);
+        orderModal.addEventListener('click', (e) => { if (e.target === orderModal) closeOrderModal(); });
+
+        // Product rendering with per-product buttons that open modal
         function renderProducts() {
             const filtered = products.filter(p => {
                 const matchesCategory = filterCategory === 'all' || p.category === filterCategory;
@@ -485,7 +528,7 @@
                             </div>
                             <div class="flex gap-2 mt-3">
                                 <button onclick="openSizeGuideModal()" class="text-xs text-teal-600 underline">📏 Size Guide</button>
-                                <button onclick="addToCartAndWhatsApp(${p.id})" class="wa-btn flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md">
+                                <button onclick="openOrderModalForProduct(${p.id})" class="wa-btn flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md">
                                     <i class="fab fa-whatsapp"></i> ${t("Order via WhatsApp", "Oda ta WhatsApp")}
                                 </button>
                             </div>
@@ -493,6 +536,7 @@
                     </div>
                 `;
             }).join('');
+            // Attach size/color button events for selection on product cards (for visual only)
             document.querySelectorAll('.size-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const productId = parseInt(btn.dataset.product);
@@ -511,31 +555,14 @@
             });
         }
 
-        window.addToCartAndWhatsApp = function(productId) {
+        window.openOrderModalForProduct = function(productId) {
             const product = products.find(p => p.id === productId);
-            if (!product) return;
-            const selectedSize = selectedSizes[productId] || product.sizes[0];
-            const selectedColor = selectedColors[productId] || product.colors[0];
-            const productName = currentLang === "en" ? product.name_en : product.name_ha;
-            let message = `*New Order from Wakaso Empire*%0A%0AProduct: ${productName}%0APrice: ₦${product.price.toLocaleString()}%0ASize: ${selectedSize}%0AColor: ${selectedColor}%0ALocation: (share via map)%0APayment: COD / USSD%0A%0AOrder via: Web Catalog (Northern Nigeria)`;
-            if (utmString) message += utmString;
-            cart.push({ id: productId, size: selectedSize, color: selectedColor });
-            updateCartUI();
-            trackWhatsAppClick(productName, product.price);
-            addToRecentlyViewed(product);
-            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
-        };
-
-        function updateCartUI() {
-            const cartFloater = document.getElementById('cartFloater');
-            const cartCountSpan = document.getElementById('cartCount');
-            if (cart.length > 0) {
-                cartFloater.classList.remove("hidden");
-                cartCountSpan.innerText = cart.length;
-            } else {
-                cartFloater.classList.add("hidden");
+            if (product) {
+                // Pass the product and its currently selected size/color to the modal
+                // The modal will create its own temporary selection, defaulting to the card's selected ones
+                openOrderModal(product);
             }
-        }
+        };
 
         function t(enText, haText) { return currentLang === "en" ? enText : haText; }
 
@@ -545,6 +572,7 @@
         document.getElementById('closeSizeGuide')?.addEventListener('click', () => sizeGuideModal.classList.add('hidden'));
         document.getElementById('closeSizeGuideBtn')?.addEventListener('click', () => sizeGuideModal.classList.add('hidden'));
 
+        // Other UI elements
         const productGrid = document.getElementById("productGrid");
         const langToggle = document.getElementById("langToggle");
         const searchInput = document.getElementById("searchInput");
@@ -567,25 +595,6 @@
             recognition.onerror = () => { alert(t("Could not hear you", "Ba a ji murya")); };
         }
 
-        langToggle.addEventListener("click", () => setLanguage(currentLang === "en" ? "ha" : "en"));
-        searchInput.addEventListener("input", (e) => { searchTerm = e.target.value; renderProducts(); updateAutocomplete(); });
-        categoryFilter.addEventListener("change", (e) => { filterCategory = e.target.value; renderProducts(); });
-        voiceSearchBtn.addEventListener("click", startVoiceSearch);
-        document.getElementById('cartFloater').addEventListener("click", () => {
-            if (cart.length === 0) return;
-            let combinedMsg = `*Wakaso Empire Order Summary*%0A%0A`;
-            cart.forEach((item, idx) => { const prod = products.find(p => p.id === item.id); if(prod) combinedMsg += `${idx+1}. ${prod.name_en} - ${item.size} / ${item.color} - ₦${prod.price}%0A`; });
-            combinedMsg += `%0ATotal items: ${cart.length}%0APreferred payment: COD / USSD%0ALocation: (to be shared)`;
-            if (utmString) combinedMsg += utmString;
-            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${encodeURIComponent(combinedMsg)}`, '_blank');
-        });
-        showUssdModal.addEventListener("click", () => ussdModal.classList.remove("hidden"));
-        const closeModalHandler = () => ussdModal.classList.add("hidden");
-        closeModal.addEventListener("click", closeModalHandler);
-        closeModalBtn.addEventListener("click", closeModalHandler);
-        ussdModal.addEventListener("click", (e) => { if (e.target === ussdModal) closeModalHandler(); });
-        document.addEventListener('click', (e) => { if (!searchInput.contains(e.target)) document.getElementById('autocompleteList').classList.add('hidden'); });
-
         function updateAutocomplete() {
             const input = searchInput.value.toLowerCase();
             const autocompleteDiv = document.getElementById('autocompleteList');
@@ -606,9 +615,27 @@
             renderProducts();
         };
 
+        langToggle.addEventListener("click", () => setLanguage(currentLang === "en" ? "ha" : "en"));
+        searchInput.addEventListener("input", (e) => { searchTerm = e.target.value; renderProducts(); updateAutocomplete(); });
+        categoryFilter.addEventListener("change", (e) => { filterCategory = e.target.value; renderProducts(); });
+        voiceSearchBtn.addEventListener("click", startVoiceSearch);
+        document.getElementById('cartFloater').addEventListener("click", () => {
+            if (cart.length === 0) return;
+            let combinedMsg = `*Wakaso Empire Order Summary*%0A%0A`;
+            cart.forEach((item, idx) => { const prod = products.find(p => p.id === item.id); if(prod) combinedMsg += `${idx+1}. ${prod.name_en} - ${item.size} / ${item.color} - ₦${prod.price}%0A`; });
+            combinedMsg += `%0ATotal items: ${cart.length}%0APreferred payment: COD / USSD%0ALocation: (to be shared)`;
+            if (utmString) combinedMsg += utmString;
+            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${encodeURIComponent(combinedMsg)}`, '_blank');
+        });
+        showUssdModal.addEventListener("click", () => ussdModal.classList.remove("hidden"));
+        const closeModalHandler = () => ussdModal.classList.add("hidden");
+        closeModal.addEventListener("click", closeModalHandler);
+        closeModalBtn.addEventListener("click", closeModalHandler);
+        ussdModal.addEventListener("click", (e) => { if (e.target === ussdModal) closeModalHandler(); });
+        document.addEventListener('click', (e) => { if (!searchInput.contains(e.target)) document.getElementById('autocompleteList').classList.add('hidden'); });
+
         renderProducts();
         renderRecentlyViewed();
-        setupProductAutocomplete();
 
         // JSON-LD structured data
         const structuredData = {
