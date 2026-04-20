@@ -40,17 +40,16 @@
     <!-- Google Fonts: Poppins + Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Google Analytics 4 & Meta Pixel (will be loaded asynchronously) -->
+    <!-- Google Analytics 4 (replace G-XXXXXXXXXX with your ID) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        // Replace G-XXXXXXXXXX with your actual GA4 measurement ID
         gtag('config', 'G-XXXXXXXXXX');
     </script>
     
-    <!-- Meta Pixel Code (Facebook) - replace YOUR_PIXEL_ID with actual ID -->
+    <!-- Meta Pixel (replace YOUR_PIXEL_ID with your ID) -->
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -182,11 +181,11 @@
             <a href="#" class="hover:text-teal-600"><i class="fab fa-facebook text-xl"></i></a>
         </div>
         <p>© 2025 Wakaso Empire – Men's Heritage Fashion</p>
-        <p class="text-xs mt-1">Order via WhatsApp: <strong>0816 551 0842</strong></p>
+        <p class="text-xs mt-1">Order via WhatsApp: <strong>+234 916 733 4331</strong></p>
     </footer>
 
     <script>
-        // Product data
+        // Product catalog (men only: Agbada, Kaftan, Fila - no Atamfa)
         const products = [
             { id: 1, name_en: "Premium Agbada", name_ha: "Agbada mai daraja", price: 45000, category: "agbada", image: "https://i.ibb.co/B28HSthP/agbada.jpg", sizes: ["S","M","L","XL"], colors: ["White","Black","Blue"] },
             { id: 2, name_en: "Modern Kaftan", name_ha: "Kaftan na zamani", price: 28500, category: "kaftan", image: "https://i.ibb.co/7xnxhnst/kaftan.jpg", sizes: ["M","L","XL"], colors: ["Grey","Brown"] },
@@ -195,7 +194,8 @@
             { id: 5, name_en: "Premium Fila (Silk)", name_ha: "Fila mai daraja (siliki)", price: 12500, category: "fila", image: "https://i.ibb.co/mCHGPkdy/fila.jpg", sizes: ["One Size"], colors: ["Cream","Navy","Maroon"] }
         ];
 
-        const BUSINESS_WA_NUMBER = "2348165510842";
+        // Updated WhatsApp number: +234 916 733 4331 -> 2349167334331
+        const BUSINESS_WA_NUMBER = "2349167334331";
         let currentLang = "en";
         let cart = [];
         let filterCategory = "all";
@@ -203,14 +203,12 @@
 
         // Marketing tracking helper
         function trackWhatsAppClick(product, selectedSize, selectedColor) {
-            // Google Analytics 4 event
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'generate_lead', {
                     'event_category': 'WhatsApp',
                     'event_label': product.name_en,
                     'value': product.price,
-                    'currency': 'NGN',
-                    'send_to': 'G-XXXXXXXXXX'
+                    'currency': 'NGN'
                 });
                 gtag('event', 'whatsapp_click', {
                     'product_id': product.id,
@@ -220,7 +218,6 @@
                     'color': selectedColor
                 });
             }
-            // Facebook Pixel event
             if (typeof fbq !== 'undefined') {
                 fbq('track', 'Lead', {
                     content_name: product.name_en,
@@ -235,7 +232,6 @@
             }
         }
 
-        // DOM elements
         const productGrid = document.getElementById("productGrid");
         const langToggle = document.getElementById("langToggle");
         const searchInput = document.getElementById("searchInput");
@@ -300,9 +296,7 @@
             const message = `*Wakaso Empire Order*%0A%0A🛍️ Product: ${productName}%0A💰 Price: ₦${product.price.toLocaleString()}%0A📏 Size: ${selectedSize}%0A🎨 Color: ${selectedColor}%0A📍 Location: (share via map)%0A💵 Payment: COD / USSD%0A%0AThank you!`;
             cart.push({ id: productId, size: selectedSize, color: selectedColor });
             updateCartUI();
-            // Track marketing events
             trackWhatsAppClick(product, selectedSize, selectedColor);
-            // Open WhatsApp
             window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${message}`, '_blank');
         };
 
@@ -346,7 +340,7 @@
 
         renderProducts();
 
-        // JSON-LD structured data for products and website (helps Google Shopping / rich results)
+        // JSON-LD structured data for SEO / Google Shopping
         const structuredData = {
             "@context": "https://schema.org",
             "@graph": [
@@ -367,19 +361,18 @@
                     "logo": "https://placehold.co/192x192/115e59/white?text=WE",
                     "contactPoint": {
                         "@type": "ContactPoint",
-                        "telephone": "+2348165510842",
+                        "telephone": "+2349167334331",
                         "contactType": "customer service",
                         "availableLanguage": ["English", "Hausa"]
                     },
                     "sameAs": [
-                        "https://wa.me/2348165510842",
+                        "https://wa.me/2349167334331",
                         "https://www.instagram.com/wakasoempire/",
                         "https://www.facebook.com/wakasoempire/"
                     ]
                 }
             ]
         };
-        // Add each product as a Product schema
         products.forEach(p => {
             structuredData["@graph"].push({
                 "@type": "Product",
