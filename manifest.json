@@ -1,0 +1,9 @@
+{
+  "name": "Wakaso Empire",
+  "short_name": "Wakaso",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0a6b3d",
+  "theme_color": "#0a6b3d",
+  "icons": [{ "src": "icon.png", "sizes": "192x192", "type": "image/png" }]
+}

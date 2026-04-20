@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Wakaso Empire | Premium Fashion Northern Nigeria</title>
+    <!-- Tailwind CSS + Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Poppins + Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fef9f1 0%, #fff6ed 100%);
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Poppins', sans-serif;
+        }
+        .wa-btn {
+            transition: all 0.2s ease;
+        }
+        .wa-btn:active {
+            transform: scale(0.97);
+        }
+        [data-lang="ha"] .en-only {
+            display: none;
+        }
+        [data-lang="en"] .ha-only {
+            display: none;
+        }
+        .product-card {
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c9a87b;
+            border-radius: 10px;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .pulse-wa {
+            animation: pulse 1.5s infinite;
+        }
+        .filter-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            appearance: none;
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#b87b4d">
+</head>
+<body class="text-gray-800" data-lang="en">
+
+    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md shadow-sm px-5 py-3 flex justify-between items-center border-b border-amber-100">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-amber-700 to-amber-500 rounded-full flex items-center justify-center shadow-md">
+                <span class="text-white font-bold text-lg">WE</span>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-amber-800 tracking-tight">Wakaso Empire</h1>
+                <p class="text-xs text-gray-500 -mt-0.5 en-only">Northern Nigeria's Finest</p>
+                <p class="text-xs text-gray-500 -mt-0.5 ha-only">Mafi kyawun kayan Arewacin Najeriya</p>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button id="langToggle" class="bg-amber-50 hover:bg-amber-100 transition px-3 py-1.5 rounded-full text-sm font-semibold text-amber-800 flex items-center gap-1">
+                <i class="fas fa-language text-xs"></i> <span class="en-only">Hausa</span><span class="ha-only">English</span>
+            </button>
+            <button id="voiceSearchBtn" class="bg-gray-100 hover:bg-gray-200 transition p-2 rounded-full text-gray-700" title="Search by voice (Hausa)">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="relative bg-gradient-to-r from-amber-900 to-amber-700 text-white py-12 px-5 overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');"></div>
+        <div class="relative max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-3 font-heading">Timeless Elegance, <br> Northern Heritage</h2>
+            <p class="text-amber-100 max-w-xl mx-auto en-only">Discover premium Agbada, Atamfa, Gyale and Fila – crafted for the modern northerner.</p>
+            <p class="text-amber-100 max-w-xl mx-auto ha-only">Samu kyawawan Agbada, Atamfa, Gyale da Fila – wanda aka kera don yan Arewa na zamani.</p>
+            <div class="mt-5 flex justify-center gap-3">
+                <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm"><i class="fab fa-whatsapp mr-1"></i> Order via WhatsApp</span>
+                <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm"><i class="fas fa-truck"></i> Delivery Kano, Kaduna, Abuja</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="bg-amber-50 border-b border-amber-200 text-amber-800 text-sm px-5 py-2.5 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-phone-alt text-amber-600"></i>
+            <span class="en-only">Pay via USSD *123# or Cash on Delivery</span>
+            <span class="ha-only">Biya ta USSD *123# ko Kaya a Kai</span>
+        </div>
+        <button id="showUssdModal" class="text-amber-700 underline text-xs font-medium">ℹ️ How it works</button>
+    </div>
+
+    <div class="sticky top-[68px] z-20 bg-white/95 backdrop-blur-sm px-5 py-4 shadow-sm border-b border-gray-100">
+        <div class="flex flex-col sm:flex-row gap-3 max-w-6xl mx-auto">
+            <div class="relative flex-1">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <input type="text" id="searchInput" placeholder="🔍 Search product / Bincika kaya" class="w-full border border-gray-200 rounded-full py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-gray-50">
+            </div>
+            <select id="categoryFilter" class="filter-select border border-gray-200 rounded-full px-5 py-2.5 bg-gray-50 text-gray-700 focus:ring-2 focus:ring-amber-400 outline-none cursor-pointer">
+                <option value="all">📦 All / Duka</option>
+                <option value="agbada">👘 Agbada</option>
+                <option value="atamfa">🧥 Atamfa</option>
+                <option value="gyale">🧕 Gyale / Hijab</option>
+                <option value="fila">🧢 Fila (Cap)</option>
+            </select>
+        </div>
+    </div>
+
+    <main class="px-5 py-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="productGrid"></div>
+    </main>
+
+    <div id="cartFloater" class="fixed bottom-6 right-6 bg-amber-700 text-white p-3.5 rounded-full shadow-xl z-30 hidden transition-all duration-200 hover:scale-110 cursor-pointer">
+        <i class="fas fa-shopping-bag text-xl"></i>
+        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
+    </div>
+
+    <div id="ussdModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden transition-all backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-bold text-xl text-amber-800 en-only">💳 USSD Payment</h3>
+                <h3 class="font-bold text-xl text-amber-800 ha-only">💳 Biya ta USSD</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="bg-amber-50 p-4 rounded-xl">
+                <p class="text-sm en-only">Dial <strong class="text-amber-800">*123#</strong> on any phone → Select "Pay bills" → Enter Wakaso code: <strong class="bg-white px-1.5 py-0.5 rounded">WAK501</strong> → Amount → Reference (order number from WhatsApp). Or choose Cash on Delivery.</p>
+                <p class="text-sm ha-only">Danna <strong class="text-amber-800">*123#</strong> a kowace waya → Zabi "Biya kudi" → Shigar lambar Wakaso: <strong class="bg-white px-1.5 py-0.5 rounded">WAK501</strong> → Adadin kudi → Lambar oda (daga WhatsApp). Ko zabi COD.</p>
+            </div>
+            <button id="closeModalBtn" class="mt-5 w-full bg-amber-700 hover:bg-amber-800 text-white py-2.5 rounded-xl transition font-medium">Got it / Na fahimta</button>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-gray-100 py-8 px-5 mt-10 text-center text-gray-500 text-sm">
+        <div class="flex justify-center gap-6 mb-3">
+            <a href="#" class="hover:text-amber-700"><i class="fab fa-whatsapp text-xl"></i></a>
+            <a href="#" class="hover:text-amber-700"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="hover:text-amber-700"><i class="fab fa-facebook text-xl"></i></a>
+        </div>
+        <p>© 2025 Wakaso Empire – Northern Nigeria's Heritage Fashion</p>
+        <p class="text-xs mt-1">Order via WhatsApp: <strong>0816 551 0842</strong></p>
+    </footer>
+
+    <script>
+        const products = [
+            { id: 1, name_en: "Premium Agbada", name_ha: "Agbada mai daraja", price: 45000, category: "agbada", image: "https://i.ibb.co/B28HSthP/agbada.jpg", sizes: ["S","M","L","XL"], colors: ["White","Black","Blue"] },
+            { id: 2, name_en: "Embroidered Atamfa", name_ha: "Atamfa da zane", price: 32000, category: "atamfa", image: "https://placehold.co/600x700/9B6B3C/white?text=Atamfa", sizes: ["One Size"], colors: ["Maroon","Navy"] },
+            { id: 3, name_en: "Modern Kaftan", name_ha: "Kaftan na zamani", price: 28500, category: "agbada", image: "https://i.ibb.co/7xnxhnst/kaftan.jpg", sizes: ["M","L","XL"], colors: ["Grey","Brown"] },
+            { id: 4, name_en: "Hijab & Gyale Set", name_ha: "Gyale da Hijabi", price: 12500, category: "gyale", image: "https://placehold.co/600x700/B88A5A/white?text=Hijab", sizes: ["One Size"], colors: ["Beige","Emerald"] },
+            { id: 5, name_en: "Wedding Agbada", name_ha: "Agbadan aure", price: 85000, category: "agbada", image: "https://placehold.co/600x700/CA9A6A/white?text=Wedding", sizes: ["L","XL","XXL"], colors: ["Cream","Gold"] },
+            { id: 6, name_en: "Casual Atamfa", name_ha: "Atamfar yau da kullum", price: 22000, category: "atamfa", image: "https://placehold.co/600x700/D4A373/white?text=Casual", sizes: ["M","L"], colors: ["Olive","Tan"] },
+            { id: 7, name_en: "Classic Fila (Embroidered)", name_ha: "Fila na gargajiya (da zane)", price: 8500, category: "fila", image: "https://placehold.co/600x700/E0B07A/white?text=Fila", sizes: ["One Size"], colors: ["White","Black","Blue"] },
+            { id: 8, name_en: "Premium Fila (Silk)", name_ha: "Fila mai daraja (siliki)", price: 12500, category: "fila", image: "https://i.ibb.co/mCHGPkdy/fila.jpg", sizes: ["One Size"], colors: ["Cream","Navy","Maroon"] }
+        ];
+
+        const BUSINESS_WA_NUMBER = "2348165510842";
+        let currentLang = "en";
+        let cart = [];
+        let filterCategory = "all";
+        let searchTerm = "";
+
+        const productGrid = document.getElementById("productGrid");
+        const langToggle = document.getElementById("langToggle");
+        const searchInput = document.getElementById("searchInput");
+        const categoryFilter = document.getElementById("categoryFilter");
+        const cartFloater = document.getElementById("cartFloater");
+        const cartCountSpan = document.getElementById("cartCount");
+        const voiceSearchBtn = document.getElementById("voiceSearchBtn");
+        const showUssdModal = document.getElementById("showUssdModal");
+        const ussdModal = document.getElementById("ussdModal");
+        const closeModal = document.getElementById("closeModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+
+        function t(enText, haText) {
+            return currentLang === "en" ? enText : haText;
+        }
+
+        function renderProducts() {
+            const filtered = products.filter(p => {
+                const matchesCategory = filterCategory === "all" || p.category === filterCategory;
+                const searchLower = searchTerm.toLowerCase();
+                const nameMatch = currentLang === "en" ? p.name_en.toLowerCase().includes(searchLower) : p.name_ha.toLowerCase().includes(searchLower);
+                return matchesCategory && nameMatch;
+            });
+
+            if (filtered.length === 0) {
+                productGrid.innerHTML = `<div class="col-span-full text-center py-16 text-gray-400"><i class="fas fa-search text-4xl mb-3 opacity-50"></i><p>${t("No products found", "Babu kayayyakin da suka dace")}</p></div>`;
+                return;
+            }
+
+            productGrid.innerHTML = filtered.map(p => {
+                const displayName = currentLang === "en" ? p.name_en : p.name_ha;
+                return `
+                    <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+                        <div class="relative overflow-hidden bg-amber-50">
+                            <img src="${p.image}" alt="${displayName}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/600x700/8B5A2B/white?text=Image+Not+Found'">
+                            <div class="absolute top-2 left-2 bg-amber-700 text-white text-xs px-2 py-0.5 rounded-full">${p.category.toUpperCase()}</div>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="font-bold text-gray-800 text-lg font-heading">${displayName}</h3>
+                            <p class="text-amber-700 font-bold text-xl mt-1">₦${p.price.toLocaleString()}</p>
+                            <div class="mt-3 space-y-2">
+                                <select id="size-${p.id}" class="w-full text-sm border border-gray-200 rounded-lg p-2 bg-gray-50 focus:ring-1 focus:ring-amber-400">
+                                    ${p.sizes.map(s => `<option>${s}</option>`).join('')}
+                                </select>
+                                <select id="color-${p.id}" class="w-full text-sm border border-gray-200 rounded-lg p-2 bg-gray-50 focus:ring-1 focus:ring-amber-400">
+                                    ${p.colors.map(c => `<option>${c}</option>`).join('')}
+                                </select>
+                                <button onclick="addToCartAndWhatsApp(${p.id})" class="wa-btn w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg">
+                                    <i class="fab fa-whatsapp"></i> ${t("Order via WhatsApp", "Oda ta WhatsApp")}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.addToCartAndWhatsApp = function(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            const sizeSelect = document.getElementById(`size-${productId}`);
+            const colorSelect = document.getElementById(`color-${productId}`);
+            const selectedSize = sizeSelect ? sizeSelect.value : product.sizes[0];
+            const selectedColor = colorSelect ? colorSelect.value : product.colors[0];
+            const productName = currentLang === "en" ? product.name_en : product.name_ha;
+            const message = `*Wakaso Empire Order*%0A%0A🛍️ Product: ${productName}%0A💰 Price: ₦${product.price.toLocaleString()}%0A📏 Size: ${selectedSize}%0A🎨 Color: ${selectedColor}%0A📍 Location: (share via map)%0A💵 Payment: COD / USSD%0A%0AThank you!`;
+            cart.push({ id: productId, size: selectedSize, color: selectedColor });
+            updateCartUI();
+            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${message}`, '_blank');
+        };
+
+        function updateCartUI() {
+            if (cart.length > 0) {
+                cartFloater.classList.remove("hidden");
+                cartCountSpan.innerText = cart.length;
+            } else {
+                cartFloater.classList.add("hidden");
+            }
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.body.setAttribute("data-lang", lang);
+            renderProducts();
+        }
+
+        function startVoiceSearch() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert(t("Voice search not supported on this browser", "Binciken murya baya aiki a wannan browser"));
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = currentLang === "en" ? "en-NG" : "ha-NG";
+            recognition.interimResults = false;
+            recognition.start();
+            recognition.onresult = (event) => {
+                const spoken = event.results[0][0].transcript;
+                searchInput.value = spoken;
+                searchTerm = spoken;
+                renderProducts();
+            };
+            recognition.onerror = () => {
+                alert(t("Could not hear you, please type", "Ba a ji murya, da fatan a rubuta"));
+            };
+        }
+
+        langToggle.addEventListener("click", () => setLanguage(currentLang === "en" ? "ha" : "en"));
+        searchInput.addEventListener("input", (e) => { searchTerm = e.target.value; renderProducts(); });
+        categoryFilter.addEventListener("change", (e) => { filterCategory = e.target.value; renderProducts(); });
+        voiceSearchBtn.addEventListener("click", startVoiceSearch);
+        cartFloater.addEventListener("click", () => {
+            if (cart.length === 0) return;
+            let combinedMsg = `*Wakaso Empire Order Summary*%0A%0A`;
+            cart.forEach((item, idx) => {
+                const prod = products.find(p => p.id === item.id);
+                if (prod) {
+                    combinedMsg += `${idx+1}. ${prod.name_en} - ${item.size} / ${item.color} - ₦${prod.price}%0A`;
+                }
+            });
+            combinedMsg += `%0ATotal items: ${cart.length}%0APreferred payment: COD / USSD%0ALocation: (to be shared)`;
+            window.open(`https://wa.me/${BUSINESS_WA_NUMBER}?text=${combinedMsg}`, '_blank');
+        });
+        showUssdModal.addEventListener("click", () => ussdModal.classList.remove("hidden"));
+        const closeModalHandler = () => ussdModal.classList.add("hidden");
+        closeModal.addEventListener("click", closeModalHandler);
+        closeModalBtn.addEventListener("click", closeModalHandler);
+        ussdModal.addEventListener("click", (e) => { if (e.target === ussdModal) closeModalHandler(); });
+
+        renderProducts();
+    </script>
+</body>
+</html>
