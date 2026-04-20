@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Wakaso Empire | Premium Fashion Northern Nigeria</title>
+    <title>Wakaso Empire | Men's Premium Fashion</title>
     <!-- Tailwind CSS + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -52,14 +52,6 @@
             background: #c9a87b;
             border-radius: 10px;
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-        .pulse-wa {
-            animation: pulse 1.5s infinite;
-        }
         .filter-select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
             background-position: right 0.5rem center;
@@ -80,8 +72,8 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold text-amber-800 tracking-tight">Wakaso Empire</h1>
-                <p class="text-xs text-gray-500 -mt-0.5 en-only">Northern Nigeria's Finest</p>
-                <p class="text-xs text-gray-500 -mt-0.5 ha-only">Mafi kyawun kayan Arewacin Najeriya</p>
+                <p class="text-xs text-gray-500 -mt-0.5 en-only">Men's Premium Collection</p>
+                <p class="text-xs text-gray-500 -mt-0.5 ha-only">Kyawawan Kayayyakin Maza</p>
             </div>
         </div>
         <div class="flex gap-2">
@@ -97,9 +89,9 @@
     <section class="relative bg-gradient-to-r from-amber-900 to-amber-700 text-white py-12 px-5 overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');"></div>
         <div class="relative max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-3 font-heading">Timeless Elegance, <br> Northern Heritage</h2>
-            <p class="text-amber-100 max-w-xl mx-auto en-only">Discover premium Agbada, Atamfa, Gyale and Fila – crafted for the modern northerner.</p>
-            <p class="text-amber-100 max-w-xl mx-auto ha-only">Samu kyawawan Agbada, Atamfa, Gyale da Fila – wanda aka kera don yan Arewa na zamani.</p>
+            <h2 class="text-3xl md:text-4xl font-bold mb-3 font-heading">Men's Timeless Elegance, <br> Northern Heritage</h2>
+            <p class="text-amber-100 max-w-xl mx-auto en-only">Discover premium Agbada, Atamfa, Kaftan and Fila – crafted for the modern northern man.</p>
+            <p class="text-amber-100 max-w-xl mx-auto ha-only">Samu kyawawan Agbada, Atamfa, Kaftan da Fila – wanda aka kera don mazan Arewa na zamani.</p>
             <div class="mt-5 flex justify-center gap-3">
                 <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm"><i class="fab fa-whatsapp mr-1"></i> Order via WhatsApp</span>
                 <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm"><i class="fas fa-truck"></i> Delivery Kano, Kaduna, Abuja</span>
@@ -126,7 +118,7 @@
                 <option value="all">📦 All / Duka</option>
                 <option value="agbada">👘 Agbada</option>
                 <option value="atamfa">🧥 Atamfa</option>
-                <option value="gyale">🧕 Gyale / Hijab</option>
+                <option value="kaftan">👔 Kaftan</option>
                 <option value="fila">🧢 Fila (Cap)</option>
             </select>
         </div>
@@ -162,20 +154,20 @@
             <a href="#" class="hover:text-amber-700"><i class="fab fa-instagram text-xl"></i></a>
             <a href="#" class="hover:text-amber-700"><i class="fab fa-facebook text-xl"></i></a>
         </div>
-        <p>© 2025 Wakaso Empire – Northern Nigeria's Heritage Fashion</p>
+        <p>© 2025 Wakaso Empire – Men's Heritage Fashion</p>
         <p class="text-xs mt-1">Order via WhatsApp: <strong>0816 551 0842</strong></p>
     </footer>
 
     <script>
+        // Only men's items: Agbada, Atamfa, Kaftan, Fila
         const products = [
             { id: 1, name_en: "Premium Agbada", name_ha: "Agbada mai daraja", price: 45000, category: "agbada", image: "https://i.ibb.co/B28HSthP/agbada.jpg", sizes: ["S","M","L","XL"], colors: ["White","Black","Blue"] },
             { id: 2, name_en: "Embroidered Atamfa", name_ha: "Atamfa da zane", price: 32000, category: "atamfa", image: "https://placehold.co/600x700/9B6B3C/white?text=Atamfa", sizes: ["One Size"], colors: ["Maroon","Navy"] },
-            { id: 3, name_en: "Modern Kaftan", name_ha: "Kaftan na zamani", price: 28500, category: "agbada", image: "https://i.ibb.co/7xnxhnst/kaftan.jpg", sizes: ["M","L","XL"], colors: ["Grey","Brown"] },
-            { id: 4, name_en: "Hijab & Gyale Set", name_ha: "Gyale da Hijabi", price: 12500, category: "gyale", image: "https://placehold.co/600x700/B88A5A/white?text=Hijab", sizes: ["One Size"], colors: ["Beige","Emerald"] },
-            { id: 5, name_en: "Wedding Agbada", name_ha: "Agbadan aure", price: 85000, category: "agbada", image: "https://placehold.co/600x700/CA9A6A/white?text=Wedding", sizes: ["L","XL","XXL"], colors: ["Cream","Gold"] },
-            { id: 6, name_en: "Casual Atamfa", name_ha: "Atamfar yau da kullum", price: 22000, category: "atamfa", image: "https://placehold.co/600x700/D4A373/white?text=Casual", sizes: ["M","L"], colors: ["Olive","Tan"] },
-            { id: 7, name_en: "Classic Fila (Embroidered)", name_ha: "Fila na gargajiya (da zane)", price: 8500, category: "fila", image: "https://placehold.co/600x700/E0B07A/white?text=Fila", sizes: ["One Size"], colors: ["White","Black","Blue"] },
-            { id: 8, name_en: "Premium Fila (Silk)", name_ha: "Fila mai daraja (siliki)", price: 12500, category: "fila", image: "https://i.ibb.co/mCHGPkdy/fila.jpg", sizes: ["One Size"], colors: ["Cream","Navy","Maroon"] }
+            { id: 3, name_en: "Modern Kaftan", name_ha: "Kaftan na zamani", price: 28500, category: "kaftan", image: "https://i.ibb.co/7xnxhnst/kaftan.jpg", sizes: ["M","L","XL"], colors: ["Grey","Brown"] },
+            { id: 4, name_en: "Wedding Agbada", name_ha: "Agbadan aure", price: 85000, category: "agbada", image: "https://i.ibb.co/Kxp3HGBv/wedding-agbada.jpg", sizes: ["L","XL","XXL"], colors: ["Cream","Gold"] },
+            { id: 5, name_en: "Casual Atamfa", name_ha: "Atamfar yau da kullum", price: 22000, category: "atamfa", image: "https://placehold.co/600x700/D4A373/white?text=Casual", sizes: ["M","L"], colors: ["Olive","Tan"] },
+            { id: 6, name_en: "Classic Fila (Embroidered)", name_ha: "Fila na gargajiya (da zane)", price: 8500, category: "fila", image: "https://placehold.co/600x700/E0B07A/white?text=Fila", sizes: ["One Size"], colors: ["White","Black","Blue"] },
+            { id: 7, name_en: "Premium Fila (Silk)", name_ha: "Fila mai daraja (siliki)", price: 12500, category: "fila", image: "https://i.ibb.co/mCHGPkdy/fila.jpg", sizes: ["One Size"], colors: ["Cream","Navy","Maroon"] }
         ];
 
         const BUSINESS_WA_NUMBER = "2348165510842";
