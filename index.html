@@ -17,7 +17,7 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #fef9f1 0%, #fff6ed 100%);
+            background: linear-gradient(135deg, #f0f9f8 0%, #e6f4f1 100%);
         }
         h1, h2, h3, .font-heading {
             font-family: 'Poppins', sans-serif;
@@ -49,7 +49,7 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #c9a87b;
+            background: #115e59;
             border-radius: 10px;
         }
         .filter-select {
@@ -61,23 +61,23 @@
         }
     </style>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#b87b4d">
+    <meta name="theme-color" content="#115e59">
 </head>
 <body class="text-gray-800" data-lang="en">
 
-    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md shadow-sm px-5 py-3 flex justify-between items-center border-b border-amber-100">
+    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md shadow-sm px-5 py-3 flex justify-between items-center border-b border-teal-100">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-amber-700 to-amber-500 rounded-full flex items-center justify-center shadow-md">
+            <div class="w-10 h-10 bg-gradient-to-br from-teal-800 to-teal-600 rounded-full flex items-center justify-center shadow-md">
                 <span class="text-white font-bold text-lg">WE</span>
             </div>
             <div>
-                <h1 class="text-xl font-bold text-amber-800 tracking-tight">Wakaso Empire</h1>
+                <h1 class="text-xl font-bold text-teal-800 tracking-tight">Wakaso Empire</h1>
                 <p class="text-xs text-gray-500 -mt-0.5 en-only">Men's Premium Collection</p>
-                <p class="text-xs text-gray-500 -mt-0.5 ha-only">Kyawawan Kayayyakin Maza</p>
+                <p class="text-xs text-gray-500 -mt-0.5 ha-only">Kyawawan Kayayyikin Maza</p>
             </div>
         </div>
         <div class="flex gap-2">
-            <button id="langToggle" class="bg-amber-50 hover:bg-amber-100 transition px-3 py-1.5 rounded-full text-sm font-semibold text-amber-800 flex items-center gap-1">
+            <button id="langToggle" class="bg-teal-50 hover:bg-teal-100 transition px-3 py-1.5 rounded-full text-sm font-semibold text-teal-800 flex items-center gap-1">
                 <i class="fas fa-language text-xs"></i> <span class="en-only">Hausa</span><span class="ha-only">English</span>
             </button>
             <button id="voiceSearchBtn" class="bg-gray-100 hover:bg-gray-200 transition p-2 rounded-full text-gray-700" title="Search by voice (Hausa)">
@@ -86,12 +86,12 @@
         </div>
     </header>
 
-    <section class="relative bg-gradient-to-r from-amber-900 to-amber-700 text-white py-12 px-5 overflow-hidden">
+    <section class="relative bg-gradient-to-r from-teal-900 to-teal-700 text-white py-12 px-5 overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');"></div>
         <div class="relative max-w-4xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-3 font-heading">Men's Timeless Elegance, <br> Northern Heritage</h2>
-            <p class="text-amber-100 max-w-xl mx-auto en-only">Discover premium Agbada, Kaftan and Fila – crafted for the modern northern man.</p>
-            <p class="text-amber-100 max-w-xl mx-auto ha-only">Samu kyawawan Agbada, Kaftan da Fila – wanda aka kera don mazan Arewa na zamani.</p>
+            <p class="text-teal-100 max-w-xl mx-auto en-only">Discover premium Agbada, Kaftan and Fila – crafted for the modern northern man.</p>
+            <p class="text-teal-100 max-w-xl mx-auto ha-only">Samu kyawawan Agbada, Kaftan da Fila – wanda aka kera don mazan Arewa na zamani.</p>
             <div class="mt-5 flex justify-center gap-3">
                 <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm"><i class="fab fa-whatsapp mr-1"></i> Order via WhatsApp</span>
                 <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm"><i class="fas fa-truck"></i> Delivery Kano, Kaduna, Abuja</span>
@@ -112,9 +112,9 @@
         <div class="flex flex-col sm:flex-row gap-3 max-w-6xl mx-auto">
             <div class="relative flex-1">
                 <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                <input type="text" id="searchInput" placeholder="🔍 Search product / Bincika kaya" class="w-full border border-gray-200 rounded-full py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-amber-400 bg-gray-50">
+                <input type="text" id="searchInput" placeholder="🔍 Search product / Bincika kaya" class="w-full border border-gray-200 rounded-full py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-teal-400 bg-gray-50">
             </div>
-            <select id="categoryFilter" class="filter-select border border-gray-200 rounded-full px-5 py-2.5 bg-gray-50 text-gray-700 focus:ring-2 focus:ring-amber-400 outline-none cursor-pointer">
+            <select id="categoryFilter" class="filter-select border border-gray-200 rounded-full px-5 py-2.5 bg-gray-50 text-gray-700 focus:ring-2 focus:ring-teal-400 outline-none cursor-pointer">
                 <option value="all">📦 All / Duka</option>
                 <option value="agbada">👘 Agbada</option>
                 <option value="kaftan">👔 Kaftan</option>
@@ -127,7 +127,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="productGrid"></div>
     </main>
 
-    <div id="cartFloater" class="fixed bottom-6 right-6 bg-amber-700 text-white p-3.5 rounded-full shadow-xl z-30 hidden transition-all duration-200 hover:scale-110 cursor-pointer">
+    <div id="cartFloater" class="fixed bottom-6 right-6 bg-teal-700 text-white p-3.5 rounded-full shadow-xl z-30 hidden transition-all duration-200 hover:scale-110 cursor-pointer">
         <i class="fas fa-shopping-bag text-xl"></i>
         <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
     </div>
@@ -135,23 +135,23 @@
     <div id="ussdModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden transition-all backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl transform transition-all">
             <div class="flex justify-between items-center mb-3">
-                <h3 class="font-bold text-xl text-amber-800 en-only">💳 USSD Payment</h3>
-                <h3 class="font-bold text-xl text-amber-800 ha-only">💳 Biya ta USSD</h3>
+                <h3 class="font-bold text-xl text-teal-800 en-only">💳 USSD Payment</h3>
+                <h3 class="font-bold text-xl text-teal-800 ha-only">💳 Biya ta USSD</h3>
                 <button id="closeModal" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
             </div>
-            <div class="bg-amber-50 p-4 rounded-xl">
-                <p class="text-sm en-only">Dial <strong class="text-amber-800">*123#</strong> on any phone → Select "Pay bills" → Enter Wakaso code: <strong class="bg-white px-1.5 py-0.5 rounded">WAK501</strong> → Amount → Reference (order number from WhatsApp). Or choose Cash on Delivery.</p>
-                <p class="text-sm ha-only">Danna <strong class="text-amber-800">*123#</strong> a kowace waya → Zabi "Biya kudi" → Shigar lambar Wakaso: <strong class="bg-white px-1.5 py-0.5 rounded">WAK501</strong> → Adadin kudi → Lambar oda (daga WhatsApp). Ko zabi COD.</p>
+            <div class="bg-teal-50 p-4 rounded-xl">
+                <p class="text-sm en-only">Dial <strong class="text-teal-800">*123#</strong> on any phone → Select "Pay bills" → Enter Wakaso code: <strong class="bg-white px-1.5 py-0.5 rounded">WAK501</strong> → Amount → Reference (order number from WhatsApp). Or choose Cash on Delivery.</p>
+                <p class="text-sm ha-only">Danna <strong class="text-teal-800">*123#</strong> a kowace waya → Zabi "Biya kudi" → Shigar lambar Wakaso: <strong class="bg-white px-1.5 py-0.5 rounded">WAK501</strong> → Adadin kudi → Lambar oda (daga WhatsApp). Ko zabi COD.</p>
             </div>
-            <button id="closeModalBtn" class="mt-5 w-full bg-amber-700 hover:bg-amber-800 text-white py-2.5 rounded-xl transition font-medium">Got it / Na fahimta</button>
+            <button id="closeModalBtn" class="mt-5 w-full bg-teal-700 hover:bg-teal-800 text-white py-2.5 rounded-xl transition font-medium">Got it / Na fahimta</button>
         </div>
     </div>
 
     <footer class="bg-white border-t border-gray-100 py-8 px-5 mt-10 text-center text-gray-500 text-sm">
         <div class="flex justify-center gap-6 mb-3">
-            <a href="#" class="hover:text-amber-700"><i class="fab fa-whatsapp text-xl"></i></a>
-            <a href="#" class="hover:text-amber-700"><i class="fab fa-instagram text-xl"></i></a>
-            <a href="#" class="hover:text-amber-700"><i class="fab fa-facebook text-xl"></i></a>
+            <a href="#" class="hover:text-teal-600"><i class="fab fa-whatsapp text-xl"></i></a>
+            <a href="#" class="hover:text-teal-600"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="hover:text-teal-600"><i class="fab fa-facebook text-xl"></i></a>
         </div>
         <p>© 2025 Wakaso Empire – Men's Heritage Fashion</p>
         <p class="text-xs mt-1">Order via WhatsApp: <strong>0816 551 0842</strong></p>
@@ -206,18 +206,18 @@
                 const displayName = currentLang === "en" ? p.name_en : p.name_ha;
                 return `
                     <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
-                        <div class="relative overflow-hidden bg-amber-50">
-                            <img src="${p.image}" alt="${displayName}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/600x700/8B5A2B/white?text=Image+Not+Found'">
-                            <div class="absolute top-2 left-2 bg-amber-700 text-white text-xs px-2 py-0.5 rounded-full">${p.category.toUpperCase()}</div>
+                        <div class="relative overflow-hidden bg-teal-50">
+                            <img src="${p.image}" alt="${displayName}" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" onerror="this.src='https://placehold.co/600x700/115e59/white?text=Image+Not+Found'">
+                            <div class="absolute top-2 left-2 bg-teal-700 text-white text-xs px-2 py-0.5 rounded-full">${p.category.toUpperCase()}</div>
                         </div>
                         <div class="p-4 flex flex-col flex-grow">
                             <h3 class="font-bold text-gray-800 text-lg font-heading">${displayName}</h3>
-                            <p class="text-amber-700 font-bold text-xl mt-1">₦${p.price.toLocaleString()}</p>
+                            <p class="text-teal-700 font-bold text-xl mt-1">₦${p.price.toLocaleString()}</p>
                             <div class="mt-3 space-y-2">
-                                <select id="size-${p.id}" class="w-full text-sm border border-gray-200 rounded-lg p-2 bg-gray-50 focus:ring-1 focus:ring-amber-400">
+                                <select id="size-${p.id}" class="w-full text-sm border border-gray-200 rounded-lg p-2 bg-gray-50 focus:ring-1 focus:ring-teal-400">
                                     ${p.sizes.map(s => `<option>${s}</option>`).join('')}
                                 </select>
-                                <select id="color-${p.id}" class="w-full text-sm border border-gray-200 rounded-lg p-2 bg-gray-50 focus:ring-1 focus:ring-amber-400">
+                                <select id="color-${p.id}" class="w-full text-sm border border-gray-200 rounded-lg p-2 bg-gray-50 focus:ring-1 focus:ring-teal-400">
                                     ${p.colors.map(c => `<option>${c}</option>`).join('')}
                                 </select>
                                 <button onclick="addToCartAndWhatsApp(${p.id})" class="wa-btn w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg">
